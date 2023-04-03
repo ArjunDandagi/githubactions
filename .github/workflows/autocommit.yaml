@@ -1,0 +1,35 @@
+name: Automatically merge json file
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+jobs:
+  get_changed_files:
+    runs-on: ["self-hosted", "infra-sso"]
+    steps:
+      - uses: actions/checkout@v2
+      
+      - name: Get changed files
+        id: changed_files
+        uses: tj-actions/changed-files@v35.7.8
+        with:
+          files: |
+            **/*DUMMY*.json
+      
+      - name: Print changed files
+        run: echo ${{ steps.changed_files.outputs.all }}
+      
+      - name: combine all json to one file with all uniq strings as json
+        run: |
+          FILES=(`find . -name "*DUMMY*.json"`)
+          DATA=$(jq -s 'flatten|sort|unique' $FILES)
+          echo $DATA > allUsers.json
+      
+      - name: Commit changes
+        uses: EndBug/add-and-commit@v7
+        with:
+          message: "AutoUpdate allUsers"
+          add: "allUsers.json"
+          author_name: "Bot"
+          author_email: "riskmlbot+noreply@sumup.com"
