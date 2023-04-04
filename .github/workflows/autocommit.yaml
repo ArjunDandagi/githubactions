@@ -30,6 +30,8 @@ jobs:
           FILES=(`find . -name "*DUMMY*.json"`)
           DATA=$(jq -s 'flatten|sort|unique' $FILES)
           echo $DATA > allUsers.json
+          cat allUsers.json
+          ls -l .
       
       - name: Commit changes
         uses: EndBug/add-and-commit@v7
