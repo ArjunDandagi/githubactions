@@ -14,6 +14,7 @@ jobs:
         with:
           repository: ${{ github.event.pull_request.head.repo.full_name }}
           ref: ${{ github.event.pull_request.head.ref }}
+          token: ${{ secrets.GITHUB_TOKEN }}
       
       - name: Get changed files
         id: changed_files
@@ -38,4 +39,4 @@ jobs:
         with:
           message: "AutoUpdate allUsers"
           add: "allUsers.json"
-          token: ${{ secrets.GITHUB_TOKEN }}
+
