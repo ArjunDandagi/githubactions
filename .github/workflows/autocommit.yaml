@@ -38,6 +38,4 @@ jobs:
         with:
           message: "AutoUpdate allUsers"
           add: "allUsers.json"
-          author_name: "Bot"
-          author_email: "riskmlbot+noreply@sumup.com"
           token: ${{ secrets.GITHUB_TOKEN }}
