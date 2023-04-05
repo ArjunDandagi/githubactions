@@ -29,7 +29,7 @@ jobs:
       - name: combine all json to one file with all uniq strings as json
         run: |
           FILES=(`find . -name "*DUMMY*.json"`)
-          DATA=$(jq -s 'flatten|sort|unique' "$FILES")
+          DATA=$(jq -s 'flatten|sort|unique' "${FILES[@]}")
           echo "$DATA" > allUsers.json
           cat allUsers.json
           ls -l .
