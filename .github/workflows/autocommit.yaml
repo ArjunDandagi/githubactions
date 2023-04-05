@@ -26,10 +26,10 @@ jobs:
             **/*DUMMY*.json
       
       - name: Print changed files
-        run: echo ${{ steps.changed_files.outputs.all }}
+        run: echo ${{ steps.changed_files.outputs.all_changed_files }}
       
       - name: combine all json to one file with all uniq strings as json
-        if: steps.changed-files-specific.outputs.any_changed == 'true'
+        if: steps.changed-files.outputs.any_changed == 'true'
         run: |
           FILES=(`find . -name "*DUMMY*.json"`)
           DATA=$(jq -s 'flatten|sort|unique' "${FILES[@]}")
@@ -38,7 +38,7 @@ jobs:
           ls -l .
       
       - name: Commit changes
-        if: steps.changed-files-specific.outputs.any_changed == 'true'
+        if: steps.changed-files.outputs.any_changed == 'true'
         uses: EndBug/add-and-commit@v7
         with:
           message: "AutoUpdate allUsers"
